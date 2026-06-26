@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "packs": [
+    {
+      "id": "2026-07",
+      "version": 1,
+      "title": "2026年7月 新着パック",
+      "url": "https://kamui00002.github.io/korenan/packs/pack-2026-07.json",
+      "requiresPro": true,
+      "questionCount": 12
+    }
+  ]
+}
