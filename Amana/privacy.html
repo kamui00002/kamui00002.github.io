@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>天名 -Amana- プライバシーポリシー / Privacy Policy</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Helvetica Neue", sans-serif;
+    max-width: 760px; margin: 0 auto; padding: 28px 22px 80px; line-height: 1.8;
+    color: #1a1c24; background: #f7f8fb;
+  }
+  h1 { font-size: 1.6rem; letter-spacing: .02em; margin-bottom: .2em; }
+  h2 { font-size: 1.18rem; margin-top: 2em; border-bottom: 1px solid #d7dae3; padding-bottom: .3em; }
+  h3 { font-size: 1.02rem; margin-top: 1.4em; }
+  .meta { color: #5b6070; font-size: .9rem; margin-bottom: 1.4em; }
+  .lead { background: #eef2fb; border-left: 4px solid #5878c8; padding: 14px 16px; border-radius: 8px; }
+  ul { padding-left: 1.2em; }
+  li { margin: .35em 0; }
+  a { color: #3a5fb0; }
+  code { background: #e9ecf3; padding: 1px 5px; border-radius: 4px; font-size: .9em; }
+  .en { margin-top: 3em; border-top: 2px solid #d7dae3; padding-top: 1.2em; }
+  footer { margin-top: 3em; color: #5b6070; font-size: .85rem; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #14151b; color: #e6e8ef; }
+    h2 { border-bottom-color: #2c2f3a; }
+    .meta, footer { color: #9aa0b2; }
+    .lead { background: #1c2436; border-left-color: #6f8fe0; }
+    a { color: #9ab6ff; }
+    code { background: #262936; }
+    .en { border-top-color: #2c2f3a; }
+  }
+  @media print { body { background: #fff; color: #000; } a { color: #000; } }
+</style>
+</head>
+<body>
+
+<h1>天名 -Amana- プライバシーポリシー</h1>
+<p class="meta">最終更新日：2026年6月25日　/　提供：天名 -Amana- 開発者（個人）</p>
+
+<p class="lead">
+  <strong>結論：</strong>天名 -Amana-（以下「本アプリ」）は、あなたを個人として特定する情報を収集・送信しません。
+  第三者の解析ツール・広告・トラッキングは使用していません。撮った空の写真は、あなたの端末の中だけに保存されます。
+</p>
+
+<h2>1. 収集しない情報</h2>
+<ul>
+  <li>本アプリは、第三者の<strong>解析（アナリティクス）SDK・広告・クロスアプリトラッキング</strong>を使用していません。</li>
+  <li>広告識別子（IDFA）を取得せず、ATT（アプリのトラッキング許可）ダイアログも表示しません（<code>NSPrivacyTracking = false</code>）。</li>
+  <li>氏名・メールアドレス・電話番号などの<strong>個人を特定する情報を求めません</strong>。アカウント登録もありません。</li>
+</ul>
+
+<h2>2. 端末の中で扱う情報</h2>
+
+<h3>位置情報（任意・「おおよそ」のみ）</h3>
+<ul>
+  <li>あなたが許可した場合にのみ、「今の空」の描画や撮りどきの判定に位置情報を使います。</li>
+  <li>取得するのは<strong>精度を落とした「おおよその位置」</strong>で、さらにグリッド（約0.1度＝市区町村よりも粗い単位）に丸めて扱います。<strong>精密な位置を当方のサーバーへ送ることはありません</strong>（当方は固有のサーバーを運用していません）。</li>
+  <li>天気を取得する際は、Apple の <strong>WeatherKit</strong> におおよその位置が送られます。これは Apple のサービスであり、<a href="https://www.apple.com/legal/privacy/">Apple のプライバシーポリシー</a>に従って扱われます。当方はこの位置情報を保存しません。</li>
+  <li>位置情報を許可しない場合でも、本アプリは既定の地域で動作します（優雅に劣化します）。</li>
+</ul>
+
+<h3>写真・カメラ</h3>
+<ul>
+  <li>外で撮影した空は、額装と名前とともに<strong>あなたの端末内（図鑑）にのみ保存</strong>されます。</li>
+  <li>撮った写真を外部に送信・アップロードすることはありません。削除はあなたがいつでも行えます。</li>
+</ul>
+
+<h3>衛星画像</h3>
+<ul>
+  <li>対比表示では、気象衛星「ひまわり」（気象衛星センターの公開トゥルーカラー再現画像）および NASA EPIC の<strong>公開画像</strong>を取得して表示します。</li>
+  <li>表示範囲は「全球／アジア／日本」からあなたが選ぶ広域で、街区レベルには寄りません。</li>
+</ul>
+
+<h2>3. 購入（App内課金）</h2>
+<ul>
+  <li>App内課金（天名 Pro）は <strong>Apple の App Store（StoreKit）</strong>が処理します。クレジットカード等の支払い情報は Apple が扱い、<strong>当アプリは受け取りません</strong>。</li>
+  <li>当アプリは、Pro 権利の有無（購入済みかどうか）のみを判定に使います。</li>
+  <li><strong>今後の予定：</strong>本アプリは提出時に、購入管理のため <strong>RevenueCat</strong> を導入する予定です。RevenueCat は匿名のアプリ内ユーザーIDと購入イベントを処理します（個人を特定する情報は含みません）。導入時には本ポリシーおよびアプリのプライバシーマニフェスト・App Store の「Appのプライバシー」表示を更新します。</li>
+</ul>
+
+<h2>4. 通知</h2>
+<ul>
+  <li>「撮りどき」通知は端末内で判定し、あなたがオンにした場合にのみ送られます。いつでもオフにできます。</li>
+</ul>
+
+<h2>5. 子どものプライバシー</h2>
+<p>本アプリは特に子どもを対象としたものではなく、子どもから個人情報を意図的に収集することはありません。</p>
+
+<h2>6. 本ポリシーの変更</h2>
+<p>
+  機能追加（例：利用状況の分析ツールの導入）により扱う情報が変わる場合は、本ポリシー、アプリ内の
+  プライバシーマニフェスト（<code>PrivacyInfo.xcprivacy</code>）、および App Store Connect の「Appのプライバシー」表示を
+  同時に更新します。重要な変更は本ページの最終更新日で示します。
+</p>
+
+<h2>7. お問い合わせ</h2>
+<p>
+  本ポリシーに関するお問い合わせは、以下までご連絡ください。<br>
+  <strong>連絡先：</strong>専用のお問い合わせメールアドレスを公開時までに本ページへ記載します（それまでの窓口はアプリ内「設定 → サポート」）。
+</p>
+
+<section class="en">
+  <h2>Privacy Policy (English summary)</h2>
+  <p class="meta">Last updated: June 25, 2026</p>
+  <p>
+    <strong>In short:</strong> Amana does not collect or transmit information that identifies you personally.
+    It uses <strong>no third-party analytics, advertising, or cross-app tracking</strong>, and does not request
+    the advertising identifier (IDFA).
+  </p>
+  <ul>
+    <li><strong>Location (optional, coarse only):</strong> Used only with your permission to render your local sky and timing.
+      We use reduced-accuracy location snapped to a coarse grid (~0.1°). Precise location is never sent to our servers
+      (we operate none). When fetching weather, an approximate location is sent to Apple <strong>WeatherKit</strong>,
+      governed by Apple's privacy policy.</li>
+    <li><strong>Photos:</strong> Skies you capture are stored <strong>only on your device</strong> and are never uploaded.</li>
+    <li><strong>Satellite imagery:</strong> Public Himawari (JMA Meteorological Satellite Center true-color reproduction)
+      and NASA EPIC images are fetched for the contrast view, at wide regions only (global/Asia/Japan).</li>
+    <li><strong>Purchases:</strong> Handled by Apple's App Store (StoreKit); we never receive your payment details.
+      We plan to add <strong>RevenueCat</strong> for purchase management at submission, which processes an anonymous
+      app user ID and purchase events; we will update this policy and the privacy manifest accordingly.</li>
+    <li><strong>Notifications:</strong> "Best moment" alerts are evaluated on-device and opt-in.</li>
+  </ul>
+  <p><strong>Contact:</strong> A dedicated contact email will be listed here by release. Until then, please use "Settings → Support" inside the app.</p>
+</section>
+
+<footer>
+  天名 -Amana- — 名前をつけたくなる空へ、人を連れ出す。<br>
+  このページは本アプリのプライバシーポリシーです。最新の内容は本ページをご確認ください。
+</footer>
+
+</body>
+</html>
