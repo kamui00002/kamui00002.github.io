@@ -37,27 +37,57 @@
 <body>
 
 <h1>天名 -Amana- プライバシーポリシー</h1>
-<p class="meta">最終更新日：2026年7月30日　/　提供：天名 -Amana- 開発者（個人）</p>
+<p class="meta">最終更新日：2026年8月14日　/　提供：天名 -Amana- 開発者（個人）</p>
 
 <p class="lead">
-  <strong>結論：</strong>天名 -Amana-（以下「本アプリ」）は、あなたを個人として特定する情報を収集・送信しません。
-  第三者の解析ツール・広告・トラッキングは使用していません。撮った空の写真は、あなたの端末の中だけに保存されます。
+  <strong>結論：</strong>天名 -Amana-（以下「本アプリ」）は、氏名・メールアドレスなど<strong>あなたが誰かを直接示す情報を求めません</strong>（アカウント登録もありません）。
+  広告・クロスアプリトラッキングは使用していません。撮った空の写真は、あなたの端末の中だけに保存されます。
+  アプリを直していくために、<strong>匿名の利用状況データ</strong>（どの機能が使われたか等）を解析ツールへ送っています
+  ——送っているもの・送っていないものは<a href="#analytics">第2節</a>に具体的に書きました。
 </p>
 
 <h2>1. 収集しない情報</h2>
 <ul>
   <li>本アプリは、<strong>広告・クロスアプリトラッキング</strong>を一切使用していません。</li>
-  <li>利用状況の<strong>解析（アナリティクス）データの送信も行っていません</strong>。将来これを有効にする場合は、本ポリシー・アプリのプライバシーマニフェスト（<code>PrivacyInfo.xcprivacy</code>）・App Store の「Appのプライバシー」表示を<strong>同時に更新</strong>します。</li>
   <li>広告識別子（IDFA）を取得せず、ATT（アプリのトラッキング許可）ダイアログも表示しません（<code>NSPrivacyTracking = false</code>）。</li>
   <li>氏名・メールアドレス・電話番号などの<strong>個人を特定する情報を求めません</strong>。アカウント登録もありません。</li>
+  <li>ログイン・アカウント登録の仕組みが無いため、次節の解析データを<strong>あなたの氏名やアカウントに結び付けてはいません</strong>。ただし解析には IP アドレスが含まれます——何が送られるかは<a href="#analytics">第2節</a>に列挙しました。</li>
 </ul>
 
-<h2>2. 端末の中で扱う情報</h2>
+<h2 id="analytics">2. 利用状況の解析（アナリティクス）</h2>
+<p>
+  どの機能が実際に使われているか、どこで静かに失敗しているかを知り、アプリを直していくために、
+  <strong>匿名の利用状況データ</strong>を <strong>PostHog</strong>（PostHog, Inc.・米国）へ送信しています。
+  ログイン機能が無いため、このデータは<strong>あなた個人と結び付いていません</strong>。
+</p>
+
+<h3>送っているもの</h3>
+<ul>
+  <li><strong>あらかじめ決めた操作の記録</strong>：今の空が表示された／「撮る→命名へ」を押した／外で撮影した／名前が立ち上がった／図鑑にしまった／対比を見た／共有した／購入画面を開いた、など。すべて <code>am_</code> で始まる<strong>固定のイベント名</strong>で、コード上に列挙したものに限られます。</li>
+  <li><strong>数と分類だけの補足</strong>：名前を<strong>書きかえたかどうか</strong>と<strong>その文字数</strong>、撮りどき判定のスコア、購入した商品の識別子、失敗した箇所と原因の短い分類語（<code>timeout</code> のような語）。</li>
+  <li><strong>端末とアプリの環境</strong>（解析 SDK が自動で付けるもの）：アプリのバージョン、機種名、OS 名とバージョン、言語、タイムゾーン、画面サイズ、Wi-Fi かモバイル回線か、および<strong>インストールごとに作られる無作為な匿名ID</strong>（広告識別子ではなく、他のアプリとも共有されません。アプリを削除すれば消えます）。</li>
+  <li><strong>IPアドレス</strong>と、そこから推定された<strong>おおよその地域（国名・都市名）</strong>。これは送信のたびに PostHog 側で自動的に付与・記録されるもので、アプリが座標を送っているわけではありません。<strong>市区町村より細かい位置にはなりません。</strong></li>
+</ul>
+
+<h3>送っていないもの</h3>
+<ul>
+  <li><strong>あなたが空に授けた名前そのもの</strong>。自由に書ける欄なので個人的な事実を含みえます。送るのは「書きかえたか」と「文字数」だけで、<strong>名前の本文を受け取れない形にコードの側で作ってあります</strong>。</li>
+  <li><strong>撮った写真</strong>、および<strong>精密な位置情報・座標</strong>。</li>
+  <li>氏名・メールアドレスなど、あなたを特定する情報。</li>
+  <li>エラーの本文（サーバーのURLやファイルパスを含みうるため）。送るのは分類済みの短い語だけです。</li>
+</ul>
+
+<p>
+  このデータを<strong>広告にもクロスアプリトラッキングにも使いません</strong>（<code>NSPrivacyTracking</code> は <code>false</code> のままです）。
+  PostHog 側での取り扱いは <a href="https://posthog.com/privacy">PostHog のプライバシーポリシー</a>をご覧ください。
+</p>
+
+<h2>3. 端末の中で扱う情報</h2>
 
 <h3>位置情報（任意・「おおよそ」のみ）</h3>
 <ul>
   <li>あなたが許可した場合にのみ、「今の空」の描画や撮りどきの判定に位置情報を使います。</li>
-  <li>取得するのは<strong>精度を落とした「おおよその位置」</strong>で、さらにグリッド（約0.1度＝市区町村よりも粗い単位）に丸めて扱います。<strong>精密な位置を当方のサーバーへ送ることはありません</strong>（当方は固有のサーバーを運用していません）。</li>
+  <li>取得するのは<strong>精度を落とした「おおよその位置」</strong>で、さらにグリッド（約0.1度＝市区町村よりも粗い単位）に丸めて扱います。<strong>精密な位置は端末の外へ出しません</strong>——当方は固有のサーバーを運用しておらず、前節の解析にも座標は含めていません（解析側で記録されるのは IP から推定された国名・都市名までです）。</li>
   <li>天気を取得する際は、Apple の <strong>WeatherKit</strong> におおよその位置が送られます。これは Apple のサービスであり、<a href="https://www.apple.com/legal/privacy/">Apple のプライバシーポリシー</a>に従って扱われます。当方はこの位置情報を保存しません。</li>
   <li>位置情報を許可しない場合でも、本アプリは既定の地域で動作します（優雅に劣化します）。</li>
 </ul>
@@ -74,29 +104,29 @@
   <li>表示範囲は「全球／アジア／日本」からあなたが選ぶ広域で、街区レベルには寄りません。</li>
 </ul>
 
-<h2>3. 購入（App内課金）</h2>
+<h2>4. 購入（App内課金）</h2>
 <ul>
   <li>App内課金（天名 Pro）は <strong>Apple の App Store（StoreKit）</strong>が処理します。クレジットカード等の支払い情報は Apple が扱い、<strong>当アプリは受け取りません</strong>。</li>
   <li>当アプリは、Pro 権利の有無（購入済みかどうか）のみを判定に使います。</li>
   <li>購入の管理には <strong>RevenueCat</strong>（RevenueCat, Inc.）を利用しています。RevenueCat は<strong>匿名のアプリ内ユーザーIDと購入イベント</strong>を処理します。氏名・メールアドレスなど個人を特定する情報は渡していません。詳しくは <a href="https://www.revenuecat.com/privacy/">RevenueCat のプライバシーポリシー</a>をご覧ください。</li>
 </ul>
 
-<h2>4. 通知</h2>
+<h2>5. 通知</h2>
 <ul>
   <li>「撮りどき」通知は端末内で判定し、あなたがオンにした場合にのみ送られます。いつでもオフにできます。</li>
 </ul>
 
-<h2>5. 子どものプライバシー</h2>
+<h2>6. 子どものプライバシー</h2>
 <p>本アプリは特に子どもを対象としたものではなく、子どもから個人情報を意図的に収集することはありません。</p>
 
-<h2>6. 本ポリシーの変更</h2>
+<h2>7. 本ポリシーの変更</h2>
 <p>
-  機能追加（例：利用状況の分析ツールの導入）により扱う情報が変わる場合は、本ポリシー、アプリ内の
+  機能追加（例：新しい外部サービスの利用）により扱う情報が変わる場合は、本ポリシー、アプリ内の
   プライバシーマニフェスト（<code>PrivacyInfo.xcprivacy</code>）、および App Store Connect の「Appのプライバシー」表示を
   同時に更新します。重要な変更は本ページの最終更新日で示します。
 </p>
 
-<h2>7. お問い合わせ</h2>
+<h2>8. お問い合わせ</h2>
 <p>
   本ポリシーに関するお問い合わせは、以下までご連絡ください。<br>
   <strong>連絡先：</strong><a href="mailto:soramoyou.app@gmail.com">soramoyou.app@gmail.com</a> までお気軽にご連絡ください（それまでの窓口はアプリ内「設定 → サポート」）。
@@ -104,16 +134,30 @@
 
 <section class="en">
   <h2>Privacy Policy (English summary)</h2>
-  <p class="meta">Last updated: July 30, 2026</p>
+  <p class="meta">Last updated: August 14, 2026</p>
   <p>
-    <strong>In short:</strong> Amana does not collect or transmit information that identifies you personally.
-    It uses <strong>no third-party analytics, advertising, or cross-app tracking</strong>, and does not request
-    the advertising identifier (IDFA).
+    <strong>In short:</strong> Amana never asks for your name, email, or any other information that
+    directly identifies you, and it has no accounts or login.
+    It uses <strong>no advertising and no cross-app tracking</strong>, and does not request
+    the advertising identifier (IDFA). It does send <strong>anonymous product-usage data</strong> to
+    an analytics service so the app can be improved — details below.
   </p>
   <ul>
+    <li><strong>Analytics (anonymous):</strong> We send a fixed, code-enumerated list of product events (prefixed
+      <code>am_</code>) to <strong>PostHog</strong> (PostHog, Inc., USA) — which features were used, plus counts and
+      short category labels: whether you renamed a sky and how many characters, timing scores, the purchased product
+      identifier, and a short reason code when something fails. The SDK also attaches app version, device model,
+      OS, language, time zone, screen size, connection type, and a <strong>random per-install anonymous ID</strong>
+      (not the advertising identifier, not shared with other apps). Your IP address, and an approximate location
+      (country and city) inferred from it by PostHog, are recorded with each event — the app itself sends no
+      coordinates, and this never resolves finer than a city. <strong>We never send the name you give a sky,
+      your photos, or any coordinates</strong> — the logging API is shaped so it cannot receive the name text.
+      The app has no accounts or login, so none of this is tied to your name or an account. See
+      <a href="https://posthog.com/privacy">PostHog's privacy policy</a>.</li>
     <li><strong>Location (optional, coarse only):</strong> Used only with your permission to render your local sky and timing.
-      We use reduced-accuracy location snapped to a coarse grid (~0.1°). Precise location is never sent to our servers
-      (we operate none). When fetching weather, an approximate location is sent to Apple <strong>WeatherKit</strong>,
+      We use reduced-accuracy location snapped to a coarse grid (~0.1°). Precise location never leaves your device
+      (we operate no servers of our own, and no coordinates are included in the analytics above).
+      When fetching weather, an approximate location is sent to Apple <strong>WeatherKit</strong>,
       governed by Apple's privacy policy.</li>
     <li><strong>Photos:</strong> Skies you capture are stored <strong>only on your device</strong> and are never uploaded.</li>
     <li><strong>Satellite imagery:</strong> Public Himawari (JMA Meteorological Satellite Center true-color reproduction)
