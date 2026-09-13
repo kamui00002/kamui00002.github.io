@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>𠮷留 徹 | iOSアプリ個人開発 × AI × 現場の知識</title>
+<meta name="description" content="消防職として働きながら、iOSアプリを企画から公開まで個人で開発し、App Storeで7本を公開。消防法令MCPサーバーや119番通報の練習アプリなど、現場の知識をAIにつなぐ開発に取り組んでいます。">
+<style>
+  :root {
+    --paper: #F5F7F8;
+    --surface: #FFFFFF;
+    --ink: #16222E;
+    --muted: #58656F;
+    --rule: #D6DDE2;
+    --signal: #C0392B;
+    --sky: #2F6FA3;
+    --serif: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "BIZ UDPMincho", serif;
+    --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "BIZ UDPGothic", "Yu Gothic UI", "Meiryo", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  a {
+    color: var(--sky);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+  }
+  a:hover { color: var(--ink); }
+  a:focus-visible {
+    outline: 2px solid var(--sky);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap {
+    width: min(1040px, 100% - 40px);
+    margin-inline: auto;
+  }
+
+  /* ヘッダー */
+  .masthead {
+    padding: 72px 0 56px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+  }
+  .id {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 4px 24px;
+    margin-bottom: 44px;
+  }
+  .id p { margin: 0; }
+  .name {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+  }
+  .kana {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    color: var(--muted);
+  }
+  .role {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  h1 {
+    margin: 0 0 28px;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    font-feature-settings: "palt";
+  }
+  .lead {
+    max-width: 38em;
+    margin: 0 0 40px;
+    font-size: 1.05rem;
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0 0 28px;
+    border-top: 2px solid var(--ink);
+  }
+  .facts div {
+    padding: 14px 20px 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .facts div:nth-child(even) {
+    padding-left: 20px;
+    border-left: 1px solid var(--rule);
+  }
+  .facts dt {
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+  .facts dd {
+    margin: 2px 0 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .head-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin: 0;
+  }
+
+  /* ページ内ナビ */
+  .toc {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: rgba(245, 247, 248, 0.95);
+    border-bottom: 1px solid var(--rule);
+    backdrop-filter: blur(8px);
+  }
+  .toc .wrap {
+    display: flex;
+    gap: 22px;
+    padding-block: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.88rem;
+    scrollbar-width: none;
+  }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* セクション */
+  main { padding-bottom: 40px; }
+  .block {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 0 48px;
+    padding: 60px 0;
+    border-bottom: 1px solid var(--rule);
+    scroll-margin-top: 50px;
+  }
+  .block-head .pin {
+    position: sticky;
+    top: 76px;
+  }
+  .block-head h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+  .block-note {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .block-body { max-width: 44em; }
+  .block-body > p { margin: 0 0 16px; }
+
+  /* プロジェクト */
+  .item {
+    margin: 0 0 36px;
+    padding: 0 0 36px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .item-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 16px;
+    margin-bottom: 6px;
+  }
+  .item-head h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .item-head p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.84rem;
+    white-space: nowrap;
+  }
+  .mark {
+    flex: none;
+    display: inline-block;
+    width: 0.62rem;
+    height: 0.62rem;
+  }
+  .mark-live { background: var(--signal); }
+  .mark-build { border: 2px solid var(--ink); }
+  .mark-lab { border: 2px solid var(--muted); border-radius: 50%; }
+
+  .item > p { margin: 0 0 10px; }
+  .item > .summary { font-weight: 600; }
+  .item > .tech {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.75;
+  }
+  .tech-label {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 0 6px;
+    color: var(--ink);
+    font-size: 0.74rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .item > .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+  .item > .note {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+  .item > .apply {
+    padding-left: 14px;
+    border-left: 2px solid var(--rule);
+    font-size: 0.95rem;
+  }
+
+  /* 開発の進め方 */
+  .steps {
+    list-style: none;
+    margin: 8px 0 24px;
+    padding: 0;
+    counter-reset: step;
+  }
+  .steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2em minmax(0, 1fr);
+    gap: 0 12px;
+    padding-bottom: 22px;
+  }
+  .steps li::before {
+    content: counter(step);
+    color: var(--signal);
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+  .steps h3 {
+    margin: 0 0 2px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .steps p { margin: 0; }
+
+  /* スキル・連絡先 */
+  .rows { margin: 0; }
+  .rows div {
+    display: grid;
+    grid-template-columns: 12em minmax(0, 1fr);
+    gap: 0 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .rows div:first-child { padding-top: 0; }
+  .rows dt { font-size: 0.92rem; font-weight: 700; }
+  .rows dd { margin: 0; font-size: 0.95rem; overflow-wrap: anywhere; }
+
+  blockquote {
+    margin: 28px 0 0;
+    padding: 2px 0 2px 20px;
+    border-left: 3px solid var(--signal);
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    line-height: 1.7;
+  }
+  blockquote p { margin: 0; }
+
+  footer {
+    padding: 28px 0 48px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  footer p { margin: 0; }
+
+  @media (max-width: 820px) {
+    .block {
+      grid-template-columns: 1fr;
+      padding: 44px 0;
+    }
+    .block-head { margin-bottom: 24px; }
+    .block-head .pin { position: static; }
+    .facts { grid-template-columns: 1fr; }
+    .facts div:nth-child(even) {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .rows div { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 520px) {
+    .wrap { width: calc(100% - 32px); }
+    .masthead { padding: 48px 0 40px; }
+    .id { margin-bottom: 32px; }
+    .lead { font-size: 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead" id="top">
+  <div class="wrap">
+    <div class="id">
+      <p class="name">𠮷留 徹<span class="kana">よしどめ とおる</span></p>
+      <p class="role">iOSアプリ個人開発／消防職員／宮崎県在住</p>
+    </div>
+
+    <h1>現場の知識を、<br>AIで使える形にする。</h1>
+
+    <p class="lead">消防職として働きながら、iOSアプリを企画からApp Store公開、公開後の改善まで一人で手がけ、これまでに7本を公開しました。いまは生成AIとMCP・RAGを使って、消防法令の検索ツールや119番通報の練習アプリなど、現場の知識をAIにつなぐ開発に取り組んでいます。</p>
+
+    <dl class="facts">
+      <div>
+        <dt>公開中</dt>
+        <dd>App Storeで7本（天名、そらもよう、Escape Nine: Endless、ParkPedia ほか）</dd>
+      </div>
+      <div>
+        <dt>開発中</dt>
+        <dd>つながる119、これなんの記事?、LearningBuddy</dd>
+      </div>
+      <div>
+        <dt>自作ツール</dt>
+        <dd>消防法令MCPサーバー（テスト90件）、SNS運用の自動化</dd>
+      </div>
+      <div>
+        <dt>資格</dt>
+        <dd>AWS Certified AI Practitioner、基本情報技術者試験</dd>
+      </div>
+    </dl>
+
+    <p class="head-links">
+      <a href="https://github.com/kamui00002" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://apps.apple.com/jp/developer/toru-yoshidome/id1841278588" target="_blank" rel="noopener noreferrer">App Storeの開発者ページ</a>
+      <a href="mailto:kamui00002@yahoo.co.jp">メールで連絡する</a>
+    </p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="ページ内リンク">
+  <div class="wrap">
+    <a href="#released">公開中のアプリ</a>
+    <a href="#building">開発中</a>
+    <a href="#tools">現場×AIのツール</a>
+    <a href="#process">開発の進め方</a>
+    <a href="#skills">スキル</a>
+    <a href="#about">経歴とこれから</a>
+    <a href="#contact">連絡先</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <!-- 公開中のアプリ -->
+    <section class="block" id="released">
+      <div class="block-head">
+        <div class="pin">
+          <h2>公開中のアプリ</h2>
+          <p class="block-note">App Storeで7本を配信中</p>
+        </div>
+      </div>
+      <div class="block-body">
+
+        <article class="item">
+          <div class="item-head">
+            <h3>天名 -Amana-</h3>
+            <p><span class="mark mark-live" aria-hidden="true"></span>公開中</p>
+          </div>
+          <p class="summary">「名前をつけたくなる空へ」をテーマに、いまの空を描き、外で出会った空に名前を授けるiOSアプリ。</p>
+          <p>時刻・位置・太陽の高さと実際の雲量から、いまの空を端末の中で描きます。外で空を撮ると、写真そのものはAIに渡さず、色・時刻・天気から取り出した特徴だけをもとに、その空の名前を生成します。電波のない場所でも動き、写真は端末の中だけに保存する、プライバシーを優先した設計です。</p>
+          <p>名付けた空は図鑑に集まり、気象衛星の画像と並べて「宇宙から見た同じ空」も見られます。空がきれいになりそうな日の通知や、ウィジェット・StandBy向けのサブスクリプションも実装し、2026年8月の公開から約1か月で10回以上アップデートしました。RevenueCat主催のハッカソン「Shipaton 2026」にも参加しています。</p>
+          <p class="tech"><span class="tech-label">技術</span>Swift、SwiftUI、WeatherKit、オンデバイスAI、WidgetKit、アプリ内課金（サブスクリプション）、気象衛星画像</p>
+          <p class="links">
+            <a href="https://apps.apple.com/jp/app/%E5%A4%A9%E5%90%8D-amana/id6790911086" target="_blank" rel="noopener noreferrer">App Store</a>
+          </p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>そらもよう</h3>
+            <p><span class="mark mark-live" aria-hidden="true"></span>公開中</p>
+          </div>
+          <p class="summary">空の写真を撮って、編集して、集める、空専門の写真SNSアプリ。</p>
+          <p>投稿した写真をAIが分析して空の種類や色を自動で分類し、「あの夕焼けの色」から空を探せる色検索につなげています。27種類の編集ツールに加え、写真から空の部分だけを見つけて補正する「空を整える」、過去の編集の傾向から空のタイプごとに仕上げを提案する「AIで自動編集」、4枚の写真をつないで広い空にする「広角合成」などを実装しました。</p>
+          <p>フォローやフィード、連続記録、ホーム画面ウィジェットも備え、2026年4月末からの4か月で20回以上アップデートしています。</p>
+          <p class="tech"><span class="tech-label">技術</span>Swift、SwiftUI、Firebase、Core Image、画像認識AI、WidgetKit、fastlane</p>
+          <p class="links">
+            <a href="https://apps.apple.com/jp/app/%E3%81%9D%E3%82%89%E3%82%82%E3%82%88%E3%81%86/id6758070979" target="_blank" rel="noopener noreferrer">App Store</a>
+            <a href="https://github.com/kamui00002/soramoyou" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>Escape Nine: Endless</h3>
+            <p><span class="mark mark-live" aria-hidden="true"></span>公開中</p>
+          </div>
+          <p class="summary">9マスの盤面で、ビートに合わせて影から逃げ続ける脱出ローグライク。</p>
+          <p>全100階層に、霧やマスの消失などの特殊ルールと、スキルの異なる4キャラクターを用意しました。テンポはBPM70から200まで加速し、Game Centerの世界ランキングと日替わりのデイリーチャレンジで、繰り返し挑戦したくなる設計にしています。</p>
+          <p>新規プレイヤー向けの段階的なチュートリアル、チュートリアルのVoiceOver読み上げ、「視差効果を減らす」設定に合わせた触覚フィードバックの自動オフなど、アクセシビリティにも取り組みました。最初はReact Nativeで作り始めましたが、音とのタイミング精度を優先してSwiftで作り直しています。</p>
+          <p class="tech"><span class="tech-label">技術</span>Swift、SwiftUI、MVVM + Combine、AVFoundation、Game Center、Firebase、AdMob、アプリ内課金</p>
+          <p class="links">
+            <a href="https://apps.apple.com/jp/app/escape-nine-endless/id6760906738" target="_blank" rel="noopener noreferrer">App Store</a>
+            <a href="https://github.com/kamui00002/escape-nine-endless" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>ParkPedia</h3>
+            <p><span class="mark mark-live" aria-hidden="true"></span>公開中</p>
+          </div>
+          <p class="summary">近くの公園を地図で探し、写真やレビューをみんなで共有するコミュニティ型アプリ。</p>
+          <p>企画、実装、Firebaseの設計、App Store審査対応から、公開後のアップデートまで一人で担当しています。ユーザー投稿を扱うため、データベースのアクセスルール設計、App Checkによる不正利用対策、Crashlyticsでのクラッシュ監視を入れました。GitHub Actionsでテストとセキュリティ検査を自動で回し、APIキーなどの混入もgitleaksでチェックしています。</p>
+          <p class="tech"><span class="tech-label">技術</span>React Native、Expo、TypeScript、Firebase（Authentication、Firestore、Storage、App Check、Crashlytics）、AdMob、Jest、Detox、Playwright、GitHub Actions</p>
+          <p class="links">
+            <a href="https://apps.apple.com/jp/app/id6755152821" target="_blank" rel="noopener noreferrer">App Store</a>
+            <a href="https://github.com/kamui00002/ParkPedia" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>Hero Alias</h3>
+            <p><span class="mark mark-live" aria-hidden="true"></span>公開中</p>
+          </div>
+          <p class="summary">名前を入れるだけで、AIがオリジナルの能力・異名・キャラクター画像を生成するエンタメアプリ。</p>
+          <p>入力された名前から、AIが超能力の設定、ヒーロー名（またはヴィラン名）、マンガ風のキャラクター画像を順に生成します。画像生成には1日の無料枠を設け、月額プラン2種と買い切りチケットで上限を広げられる課金設計にしました。Appleでサインインによるデバイス間の同期や、アプリ内からのアカウント削除にも対応しています。</p>
+          <p class="tech"><span class="tech-label">技術</span>OpenAI GPT Image API（画像生成）、テキスト生成AI、Firebase、Sign in with Apple、アプリ内課金（サブスクリプション・消耗型）</p>
+          <p class="links">
+            <a href="https://apps.apple.com/jp/app/id6768334689" target="_blank" rel="noopener noreferrer">App Store</a>
+          </p>
+          <p class="note">リポジトリは非公開</p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>ことばのたまご</h3>
+            <p><span class="mark mark-live" aria-hidden="true"></span>公開中</p>
+          </div>
+          <p class="summary">MBTI診断で決まったキャラクターを、英単語クイズで育てる学習アプリ。</p>
+          <p>16問の診断で自分専用のキャラクターが決まり、クイズに正解すると経験値が貯まって、たまごから成長していきます。App Store版に加えて、ブラウザで遊べるWeb版も作りました。</p>
+          <p class="tech"><span class="tech-label">技術</span>React Native、Expo、TypeScript（アプリ版）、React、Vite（Web版）</p>
+          <p class="links">
+            <a href="https://apps.apple.com/jp/app/id6754462721" target="_blank" rel="noopener noreferrer">App Store</a>
+            <a href="https://github.com/kamui00002/kotoba-no-tammago" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>Ai-Compas</h3>
+            <p><span class="mark mark-live" aria-hidden="true"></span>公開中</p>
+          </div>
+          <p class="summary">「やりたいこと」から、自分に合ったAIツールを探せるアプリ。</p>
+          <p>目的から探す検索と、質問に答えていくとAIツールを提案する「AI診断」を搭載しています。</p>
+          <p class="tech"><span class="tech-label">技術</span>React、TypeScript</p>
+          <p class="links">
+            <a href="https://apps.apple.com/jp/app/id6753145777" target="_blank" rel="noopener noreferrer">App Store</a>
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 開発中 -->
+    <section class="block" id="building">
+      <div class="block-head">
+        <div class="pin">
+          <h2>開発中のアプリ</h2>
+          <p class="block-note">公開に向けて開発・検証しているもの</p>
+        </div>
+      </div>
+      <div class="block-body">
+
+        <article class="item">
+          <div class="item-head">
+            <h3>つながる119</h3>
+            <p><span class="mark mark-build" aria-hidden="true"></span>開発中</p>
+          </div>
+          <p class="summary">AIの「消防指令員」を相手に、声で119番通報を練習できるアプリ。</p>
+          <p>火災・救急のシナリオを消防職員の視点で作り、AIが指令員として、場所やけが人の有無などを一つずつ聞き取ります。本番と同じく途中で電話を切れない仕様にし、通報のあとは「伝えられた情報」と「伝えるべきだった情報」を比べてフィードバックします。子どもから大人まで、いざというときに落ち着いて通報できるようになることが目的です。</p>
+          <p class="tech"><span class="tech-label">技術</span>Swift、SwiftUI、Speech（音声認識）、AVSpeechSynthesizer（音声合成）、LLM API、RAG</p>
+          <p class="note">リポジトリは非公開</p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>これなんの記事?</h3>
+            <p><span class="mark mark-build" aria-hidden="true"></span>開発中</p>
+          </div>
+          <p class="summary">Wikipediaの記事タイトルを当てるクイズアプリ。</p>
+          <p>1,000問をアプリに同梱して通信なしでも遊べるようにし、3つのモードと12のジャンルを用意しました。</p>
+          <p class="tech"><span class="tech-label">技術</span>Swift、SwiftUI、SwiftData、MVVM + Repository、Wikipedia API</p>
+          <p class="note">リポジトリは非公開</p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>LearningBuddy（学習相棒AI）</h3>
+            <p><span class="mark mark-lab" aria-hidden="true"></span>検証中</p>
+          </div>
+          <p class="summary">勉強中の画面をキャラクターと一緒に見ながら、理解から復習まで支えるAI学習アプリ。</p>
+          <p>Kindleなどで読んでいる内容を、自分で作ったキャラクターがそばで一緒に見て、AIが解説してくれるiPhone・iPad向けアプリです。解説だけで終わらせず、理解を確かめる問題、正誤の判定、苦手の記録、復習までを一つの学習サイクルとしてつなぎ、学習の記録をもとに一人ひとりに合わせていく設計です。</p>
+          <p>いまはiOSで「見ている画面をAIに渡す方法」を、スクリーンショット共有、ピクチャ・イン・ピクチャ、ReplayKitによる画面配信、アプリ内リーダーの4方式で比較検証しています。</p>
+          <p class="tech"><span class="tech-label">技術</span>Swift、SwiftUI、ReplayKit、LLM API</p>
+          <p class="note">リポジトリは非公開</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 現場×AIのツール -->
+    <section class="block" id="tools">
+      <div class="block-head">
+        <div class="pin">
+          <h2>現場×AIのツール</h2>
+          <p class="block-note">専門知識と業務をAIにつなぐ仕組み</p>
+        </div>
+      </div>
+      <div class="block-body">
+
+        <article class="item">
+          <div class="item-head">
+            <h3>消防法令MCPサーバー（fire_law_mcp）</h3>
+            <p><span class="mark mark-lab" aria-hidden="true"></span>検証中</p>
+          </div>
+          <p class="summary">消防法令について、AIが条文にもとづいて答えられるようにする自作のMCPサーバー。</p>
+          <p>消防の仕事では、設備の設置基準などを法令の条文どおりに確かめる場面が多くあります。AIが「それらしい答え」を作ってしまわないよう、e-Govの法令データを全文検索できる形で持ち、RAGと組み合わせてAIに条文を渡す仕組みをPythonで作りました。試作からレビューと改良を重ねてv5まで育て、消防法施行令の全体と消防用設備等25種に対応し、pytestによる90件のテストを通しています。毎年の法改正に追いつくための更新手順も、Claude Codeで回せる形に整えました。</p>
+          <p class="apply">条文やマニュアルを正確に引く必要がある仕事（行政の手続き、社内規程、業界のルールなど）にも、同じ設計を応用できると考えています。</p>
+          <p class="tech"><span class="tech-label">技術</span>Python、MCP、RAG、SQLite FTS5、e-Gov法令API、pytest</p>
+          <p class="note">検証用のためリポジトリは非公開</p>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>SNS運用の自動化ワークフロー</h3>
+            <p><span class="mark mark-build" aria-hidden="true"></span>構築済み</p>
+          </div>
+          <p class="summary">宣伝動画の生成から、確認・承認・配信までをつないだ自動化の仕組み。</p>
+          <p>ParkPediaとEscape Nineの宣伝のために、動画素材の生成、画像認識AIによる品質チェック、Notionでの承認、TikTok・Instagram・Facebookや広告への配信までを、7本のワークフローに分けて自動化しました。公開前にNotionで人が承認する工程を挟み、AIが作ったものがそのまま外に出ない構成にしています。</p>
+          <p class="tech"><span class="tech-label">技術</span>n8n（VPSでセルフホスト）、Kling（動画生成）、Notion API</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 開発の進め方 -->
+    <section class="block" id="process">
+      <div class="block-head">
+        <div class="pin">
+          <h2>開発の進め方</h2>
+        </div>
+      </div>
+      <div class="block-body">
+        <p>プログラミング未経験から始め、AIに解説させながら覚えてきました。いまはAIに「書かせる」ことより、AIの成果物を確かめられる仕組みを作ることを大事にしています。</p>
+
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>先に要件を文章にする</h3>
+              <p>要件定義、設計、タスクの順に仕様を書き、プロジェクトのルールをCLAUDE.mdにまとめてから、Claude Codeで実装を始めます。</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>計画役と実装役を分ける</h3>
+              <p>設計やレビューを担当するモデルと、実装を担当するモデルを使い分け、一つのAIに丸投げしない体制で進めます。</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>テストと自動チェックで確かめる</h3>
+              <p>ParkPediaではGitHub Actionsでテストやセキュリティ検査を自動化し、消防法令MCPサーバーは90件のテストで動作を確認しています。</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>影響の大きい変更は、承認してから反映する</h3>
+              <p>ファイルの一括整理のような作業は、gitでブランチを切り、差分を確認して承認してから反映する手順にしています。</p>
+            </div>
+          </li>
+        </ol>
+
+        <p>公開後は小さな改善を細かく出すことを重視していて、そらもようは4か月で20回以上、天名は公開から約1か月で10回以上アップデートしました。作業ログはClaude Codeのフック機能で自動記録してObsidianに蓄積し、振り返りや発信に使っています。</p>
+        <p class="block-note">使っているAIツール：Claude Code（メイン）、Claude、ChatGPT、Codex、Cursor</p>
+      </div>
+    </section>
+
+    <!-- スキル -->
+    <section class="block" id="skills">
+      <div class="block-head">
+        <div class="pin">
+          <h2>スキル</h2>
+          <p class="block-note">プロダクトで使った技術、学習中の分野、資格</p>
+        </div>
+      </div>
+      <div class="block-body">
+        <dl class="rows">
+          <div>
+            <dt>iOS</dt>
+            <dd>Swift、SwiftUI、SwiftData、Combine、AVFoundation、WeatherKit、WidgetKit、Core Image、Game Center、アプリ内課金</dd>
+          </div>
+          <div>
+            <dt>React Native・Web</dt>
+            <dd>React Native、Expo、React、TypeScript、Vite</dd>
+          </div>
+          <div>
+            <dt>バックエンド</dt>
+            <dd>Firebase（Authentication、Firestore、Storage、App Check、Crashlytics）、Sign in with Apple</dd>
+          </div>
+          <div>
+            <dt>AI・自動化</dt>
+            <dd>Claude Code、MCP、RAG、OpenAI API（画像生成）、オンデバイスAI、Python、n8n、Notion API</dd>
+          </div>
+          <div>
+            <dt>品質・リリース</dt>
+            <dd>Git、GitHub Actions、Jest、Detox、Playwright、pytest、fastlane、App Store Connect</dd>
+          </div>
+          <div>
+            <dt>学習・検証中</dt>
+            <dd>AWS、Azure OpenAI（RAGのハンズオン）、Next.js</dd>
+          </div>
+          <div>
+            <dt>資格</dt>
+            <dd>AWS Certified AI Practitioner 取得、基本情報技術者試験 合格</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 経歴とこれから -->
+    <section class="block" id="about">
+      <div class="block-head">
+        <div class="pin">
+          <h2>経歴とこれから</h2>
+        </div>
+      </div>
+      <div class="block-body">
+        <p>消防職として勤務しています。IT業界の外からのスタートですが、だからこそ「技術として面白いか」より「現場で本当に使えるか」を基準に作っています。</p>
+        <p>現場には、紙や手作業が残る業務、専門知識を調べる手間、引き継ぎや教育の負担など、ソフトウェアとAIで軽くできる課題がたくさんあります。つながる119や消防法令MCPサーバーは、その課題を自分の職場の知識で試しているプロジェクトです。</p>
+        <p>これからは宮崎を拠点に、中小企業や店舗、教育、福祉、行政といった身近な現場に、AIを実際に使える形で届けたいと考えています。</p>
+        <blockquote>
+          <p>目指すのは、AIを導入することではなく、AIで現場が少し良くなることです。</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- 連絡先 -->
+    <section class="block" id="contact">
+      <div class="block-head">
+        <div class="pin">
+          <h2>連絡先</h2>
+        </div>
+      </div>
+      <div class="block-body">
+        <p>採用やカジュアル面談などのご連絡は、メールでお願いします。</p>
+        <dl class="rows">
+          <div>
+            <dt>メール</dt>
+            <dd><a href="mailto:kamui00002@yahoo.co.jp">kamui00002@yahoo.co.jp</a></dd>
+          </div>
+          <div>
+            <dt>GitHub</dt>
+            <dd><a href="https://github.com/kamui00002" target="_blank" rel="noopener noreferrer">@kamui00002</a></dd>
+          </div>
+          <div>
+            <dt>App Store</dt>
+            <dd><a href="https://apps.apple.com/jp/developer/toru-yoshidome/id1841278588" target="_blank" rel="noopener noreferrer">toru yoshidome の開発者ページ</a></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>𠮷留 徹</p>
+    <p>最終更新：2026年9月</p>
+  </div>
+</footer>
+
+</body>
+</html>
