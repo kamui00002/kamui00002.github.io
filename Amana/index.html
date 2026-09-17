@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>天名 -Amana- | 窓の外の空を、いま描く iOS アプリ</title>
+<meta name="description" content="天名 -Amana- は、あなたの時刻・位置・いまの天気から窓の外の空を端末内で描き、本物の空を見に行きたくさせる iOS アプリです。">
+<meta property="og:title" content="天名 -Amana-">
+<meta property="og:description" content="窓の外の空を、いま描く。そして本物の空へ連れ出す iOS アプリ。">
+<meta property="og:image" content="https://kamui00002.github.io/Amana/img/hero.jpg">
+<meta property="og:type" content="website">
+<style>
+  :root { color-scheme: light dark; --bg:#f7f8fb; --fg:#1a1c24; --sub:#5b6070; --line:#d7dae3; --link:#3a5fb0; --card:#fff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14151b; --fg:#e6e8ef; --sub:#9aa0b2; --line:#2c2f3a; --link:#9ab6ff; --card:#1a1c24; }
+  }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Helvetica Neue",sans-serif;
+         margin:0; color:var(--fg); background:var(--bg); line-height:1.8; }
+  .wrap { max-width:860px; margin:0 auto; padding:0 22px 80px; }
+  header.hero { background:#0a0f1f; color:#eef1f8; padding:0 0 30px; }
+  .hero img { width:100%; display:block; }
+  .hero .inner { max-width:860px; margin:0 auto; padding:26px 22px 0; }
+  .hero h1 { font-size:1.9rem; margin:.2em 0 .1em; letter-spacing:.02em; }
+  .hero p { color:#c3c9da; margin:.3em 0 1.1em; }
+  .cta { display:inline-block; background:#f0b060; color:#241a08; font-weight:700;
+         padding:12px 22px; border-radius:999px; text-decoration:none; }
+  .cta.sub { background:transparent; color:#eef1f8; border:1px solid #495066; font-weight:500; margin-left:8px; }
+  h2 { font-size:1.2rem; margin-top:2.4em; border-bottom:1px solid var(--line); padding-bottom:.3em; }
+  a { color:var(--link); }
+  .shots { display:flex; gap:16px; flex-wrap:wrap; margin-top:1.2em; justify-content:space-between; }
+  .shot { flex:0 1 240px; max-width:240px; margin:0; }
+  .shot img { width:100%; border-radius:14px; display:block; box-shadow:0 8px 24px rgba(0,0,0,.18); }
+  .shot figcaption { color:var(--sub); font-size:.88rem; margin-top:.6em; }
+  ul { padding-left:1.2em; } li { margin:.45em 0; }
+  .en { margin-top:3.4em; border-top:2px solid var(--line); padding-top:1.2em; }
+  footer { margin-top:3em; color:var(--sub); font-size:.85rem; border-top:1px solid var(--line); padding-top:1.2em; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="img/hero.jpg" alt="天名 -Amana- のホーム画面。夕焼けの空が描かれている">
+  <div class="inner">
+    <h1>天名 -Amana-</h1>
+    <p>窓の外の空を、いま描く。そして本物の空へ連れ出す。</p>
+    <a class="cta" href="https://apps.apple.com/app/id6790911086">App Store で見る</a>
+    <a class="cta sub" href="https://www.youtube.com/@amana_sky">動画を見る</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+<h2>どんなアプリ？</h2>
+<p>
+  天名は、<strong>あなたの時刻・位置・いまの天気から、窓の外の空を端末の中で描く</strong> iOS アプリです。
+  写真でも衛星画像でもありません。太陽の高さと雲の量から、その場所のその瞬間の空を計算して描いています。
+</p>
+<ul>
+  <li><strong>いまの空が届く</strong>：朝の青、夕方の焼け、夜の月。実際の天気に合わせて変わります。</li>
+  <li><strong>外へ連れ出す</strong>：空が見頃のときだけ、そっと一言。押し売りはしません。</li>
+  <li><strong>撮って、名前をつける</strong>：外で撮った空に色と名前と一行が付き、図鑑にたまっていきます。</li>
+</ul>
+
+<div class="shots">
+  <figure class="shot"><img src="img/sky.jpg" alt="ホーム画面：いまの空"><figcaption>いまの空。場所と時刻、そして撮りどきの一言。</figcaption></figure>
+  <figure class="shot"><img src="img/name.jpg" alt="命名画面：撮った空に名前がつく"><figcaption>撮った空に、色と名前と一行が付きます。</figcaption></figure>
+  <figure class="shot"><img src="img/collection.jpg" alt="図鑑：名前のついた空が並ぶ"><figcaption>名前のついた空が、図鑑にたまります。</figcaption></figure>
+</div>
+
+<h2>テーマソング</h2>
+<p>
+  「<a href="https://www.youtube.com/watch?v=KHijtjS_ROo">空に名前をつけよう</a>」——
+  アプリのための曲です。2人の声が、空に名前をつける歌をうたいます。
+</p>
+
+<h2>開発の記録</h2>
+<p>作る過程は隠さず書いています（英語・HackerNoon）。</p>
+<ul>
+  <li><a href="https://hackernoon.com/why-we-abandoned-satellite-imagery-for-an-on-device-procedural-sky">なぜ衛星画像をやめて、端末の中で空を描くことにしたか</a></li>
+  <li><a href="https://hackernoon.com/amanas-sky-shader-worked-perfectly-except-it-kept-getting-the-weather-wrong">空のシェーダーは正しかったのに、天気について嘘をついていた話</a></li>
+  <li><a href="https://hackernoon.com/how-i-tested-amana-across-locations-in-the-ios-simulator">夕焼けを待たず、シミュレータの位置を動かしてストア用スクショを撮った話</a></li>
+  <li><a href="https://hackernoon.com/suno-turned-an-83-word-app-brief-into-a-four-minute-japanese-theme-song-for-my-app">83語の指示が、4分の日本語のテーマソングになるまで</a></li>
+  <li><a href="https://hackernoon.com/i-made-two-ai-sisters-the-face-of-my-indie-app-so-i-wouldnt-have-to-show-mine">自分の顔を出さずに、アプリに顔を持たせた話</a></li>
+  <li><a href="https://hackernoon.com/i-gave-my-indie-app-two-ai-spokespersons-3590-views-later-nobody-came-back">3,590回再生されて、誰も戻ってこなかった話</a></li>
+</ul>
+
+<h2>リンク</h2>
+<ul>
+  <li><a href="https://apps.apple.com/app/id6790911086">App Store</a></li>
+  <li><a href="https://www.youtube.com/@amana_sky">YouTube</a>／<a href="https://x.com/AmanaRevenucat">X</a></li>
+  <li><a href="support.html">サポート・お問い合わせ</a>／<a href="privacy.html">プライバシーポリシー</a></li>
+</ul>
+
+<div class="en">
+  <h2>In English</h2>
+  <p>
+    <strong>Amana</strong> draws the sky outside your window — from your time, your location and the live weather —
+    and then tries to get you to put the phone down and go look at the real one.
+    Nothing here is a stock photo: the sky is computed on your device from the sun's position and today's cloud cover.
+  </p>
+  <ul>
+    <li><a href="https://apps.apple.com/app/id6790911086">Download on the App Store</a></li>
+    <li><a href="https://www.youtube.com/@amana_sky">YouTube</a> · <a href="https://x.com/AmanaRevenucat">X</a> · <a href="https://devpost.com/software/amana-wzakhm">Devpost</a></li>
+    <li>Dev logs on <a href="https://hackernoon.com/u/amana-sky">HackerNoon</a></li>
+    <li><a href="support.html">Support</a> · <a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+</div>
+
+<footer>
+  天名 -Amana- は個人が開発している iOS アプリです。<br>
+  最終更新：2026年9月17日
+</footer>
+
+</div>
+</body>
+</html>
